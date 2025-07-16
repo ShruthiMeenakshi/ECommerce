@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <!-- Modal Container -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="termsModal">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-600 to-purple-700 p-4 sticky top-0 z-10">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-white">Terms and Conditions</h2>
+                    <button id="closeTermsModal" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6 space-y-4">
+                <div class="prose max-w-none">
+                    <h3 class="text-lg font-semibold text-gray-800">1. Acceptance of Terms</h3>
+                    <p class="text-gray-600 mt-2">
+                        By accessing or using our services, you agree to be bound by these Terms and Conditions. 
+                        If you do not agree with any part of these terms, you must not use our services.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4">2. User Responsibilities</h3>
+                    <p class="text-gray-600 mt-2">
+                        You are responsible for maintaining the confidentiality of your account information and 
+                        for all activities that occur under your account. You agree to immediately notify us of 
+                        any unauthorized use of your account.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4">3. Privacy Policy</h3>
+                    <p class="text-gray-600 mt-2">
+                        Your use of our services is also governed by our Privacy Policy, which explains how we collect, 
+                        use, and protect your personal information. Please review our Privacy Policy carefully.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4">4. Intellectual Property</h3>
+                    <p class="text-gray-600 mt-2">
+                        All content included on our platform, such as text, graphics, logos, and software, is the 
+                        property of our company or its content suppliers and protected by intellectual property laws.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4">5. Limitation of Liability</h3>
+                    <p class="text-gray-600 mt-2">
+                        We shall not be liable for any indirect, incidental, special, or consequential damages 
+                        resulting from the use or inability to use our services, even if we have been advised of 
+                        the possibility of such damages.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4">6. Changes to Terms</h3>
+                    <p class="text-gray-600 mt-2">
+                        We reserve the right to modify these terms at any time. Your continued use of our services 
+                        after any such changes constitutes your acceptance of the new Terms and Conditions.
+                    </p>
+                    
+                    <h3 class="text-lg font-semibold text-gray-800 mt-4">7. Governing Law</h3>
+                    <p class="text-gray-600 mt-2">
+                        These terms shall be governed by and construed in accordance with the laws of the jurisdiction 
+                        in which our company is registered, without regard to its conflict of law provisions.
+                    </p>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-200">
+                    <div class="flex items-center">
+                        <input id="modalAgree" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="modalAgree" class="ml-2 block text-sm text-gray-700">
+                            I have read and agree to these Terms and Conditions
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-end sticky bottom-0">
+                <button id="acceptTerms" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50" disabled>
+                    Accept and Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Trigger Button (You can remove this in your actual implementation) -->
+    <button id="showTermsBtn" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+        View Terms and Conditions
+    </button>
+
+    <script>
+        // Modal functionality
+        const termsModal = document.getElementById('termsModal');
+        const showTermsBtn = document.getElementById('showTermsBtn');
+        const closeTermsModal = document.getElementById('closeTermsModal');
+        const acceptTerms = document.getElementById('acceptTerms');
+        const modalAgree = document.getElementById('modalAgree');
+        
+        // Show modal (this would be triggered from your register form)
+        showTermsBtn.addEventListener('click', () => {
+            termsModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+        
+        // Close modal
+        closeTermsModal.addEventListener('click', () => {
+            termsModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Accept terms
+        modalAgree.addEventListener('change', (e) => {
+            acceptTerms.disabled = !e.target.checked;
+        });
+        
+        acceptTerms.addEventListener('click', () => {
+            termsModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            alert('Terms accepted!');
+            // In your register form, you would set the main checkbox as checked
+            window.location.href = "register.html";
+        });
+        
+        // Close modal when clicking outside
+        termsModal.addEventListener('click', (e) => {
+            if (e.target === termsModal) {
+                termsModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
