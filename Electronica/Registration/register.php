@@ -41,12 +41,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssssi", $name, $email, $phone, $password, $otp);
     
     if ($stmt->execute()) {
-        // In a real application, you would send the OTP to the user's email/phone
-        // For this example, we'll just display it
-        echo "<script>
-                alert('Registration successful! Your OTP is: $otp');
-                window.location.href = 'otp.php?email=$email';
-              </script>";
+        // Send OTP to user's email
+        $to = $email;
+        $subject = "Your OTP for Registration";
+        $message = "Dear " . $name . ",\n\nYour One-Time Password (OTP) for registration is: " . $otp . "\n\nPlease use this OTP to verify your account.\n\nRegards,\nYour Website Team";
+        $headers = "From: webmaster@yourdomain.com\r\n";
+        $headers .= "Content-type: text/plain; charset=iso-8859-1\r\n";
+
+        if (mail($to, $subject, $message, $headers)) {
+            echo "<script>
+                    alert('Registration successful! An OTP has been sent to your email address.');
+                    window.location.href = 'otp.php?email=$email';
+                  </script>";
+        } else {
+            echo "<script>alert('Registration successful, but failed to send OTP email. Please contact support. Error: " . error_get_last()['message'] . "'); window.location.href = 'otp.php?email=$email';</script>";
+        }
     } else {
         echo "<script>alert('Error: " . $stmt->error . "'); window.location.href = 'register.html';</script>";
     }
